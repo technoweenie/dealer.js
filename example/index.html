@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>Dealer.js websocket test</title>
+  <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+  <script type="text/javascript" src="js/jquery.uuid.js"></script>
+  <script type="text/javascript" src="js/jquery.ws-0.3pre.js"></script>
+  <script type="text/javascript">
+var socket;
+
+function result(data) {
+  $('#results').append('<li>' + data + '</li>')
+}
+
+function connect(channel) {
+  var id = $.uuid(),
+     url = 'ws://localhost:3840/' + channel + '?id=' + id;
+
+  socket = $.ws.conn({
+    url : url,
+    onmessage: function(data) {
+      result('received: ' + data)
+    },
+    onopen : function () {
+      result('connected to ' + url);
+    },
+    onclose : function () {
+      result('disconnected');
+    }
+  });
+}
+
+$(document).ready(function() {
+  // sets the channel and connects to the web socket server
+  $('#channelButton').click(function() {
+    var name = $('#channel').val();
+    if(name.length == 0) return false;
+    connect(name)
+    $('#channelParagraph').hide()
+    $('#sendParagraph').show()
+    return false;
+  })
+
+  // sends a message to the web socket server
+  $('#sendButton').click(function() {
+    var data = $('#sendMessage').val();
+    if(data.length == 0) return false;
+    result('PING! ' + data)
+    socket.send(data)
+    $('#sendMessage').val('');
+    return false;
+  })
+})
+  </script>
+</head>
+
+<body>
+  <form action="#">
+    <p id="channelParagraph">
+      <input type="text" id="channel" placeholder="Enter Channel" />
+      <button id="channelButton">Connect</button>
+    </p>
+    <p id="sendParagraph" style="display:none">
+      <input type="text" id="sendMessage" placeholder="Send Message">
+      <button id="sendButton">Send</button>
+    </p>
+  </form>
+  
+  <ul id="results"></ul>
+</body>
+</html>
