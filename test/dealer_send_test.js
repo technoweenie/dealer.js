@@ -22,7 +22,7 @@ fakeSocket.prototype.write = function(data) {
 // send a single message to a single client
 var client = d.connect(new fakeSocket('test'), '/foo?id=abc')
 
-d.send(client, 'test')
+client.send('test')
 assert.equal(0,    client.socket.expectedCalls)
 assert.equal(null, client.socket.expectedData)
 

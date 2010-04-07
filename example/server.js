@@ -15,7 +15,7 @@ conn.addListener('disconnect', function(client) {
 
 conn.addListener('receive', function(client, data) {
   sys.puts('from ' + client.id + '(' + client.channel + '): ' + data)
-  conn.send(client, "PONG! " + data)
+  client.send("PONG! " + data)
 })
 
 var redis = redisClient.createClient();
