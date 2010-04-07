@@ -41,7 +41,7 @@ $(document).ready(function() {
     var port = $('#port').val()
     if(name.length == 0) return false;
     connect(port, name)
-    $('#channelParagraph').hide()
+    $('#channelParagraph input').attr('disabled', true)
     $('#sendParagraph').show()
     return false;
   })
