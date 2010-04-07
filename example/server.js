@@ -2,8 +2,12 @@ var redisClient = require("redisclient"),
          dealer = require("../lib"),
             sys = require('sys')
 
+var port = process.env['PORT'] || 3840
+
 conn = dealer.create()
-conn.server.listen(3840)
+conn.server.listen(port)
+
+sys.puts("listening on " + port)
 
 conn.addListener('connect', function(client) {
   sys.puts('connected to ' + client.channel + ': '+ client.id)
