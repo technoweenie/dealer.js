@@ -31,6 +31,8 @@ Demo screencast: http://screenr.com/ctM
 * some sort of authentication/authorization for channels
 * Socket.IO?
 * kiwi or other node packaging system
+* sweet frontend that supports web sockets OR flash
+* frontend that attempts to reconnect after failures
 
 ## Note on Patches/Pull Requests
  
