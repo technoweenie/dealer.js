@@ -9,6 +9,8 @@ any applicable subscribers, or ignores them.
 
 See the `/example` dir for a server-side and client-side demo using redis.
 
+Demo screencast: http://screenr.com/ctM
+
 ## Setup
 
     // first, we need ncr/node.ws.js for the web socket server stuff
@@ -26,7 +28,7 @@ See the `/example` dir for a server-side and client-side demo using redis.
 
 ## TODO
 
-* Multiple channels for a single client
+* some sort of authentication/authorization for channels
 * Socket.IO?
 * kiwi or other node packaging system
 
