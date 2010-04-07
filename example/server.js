@@ -1,5 +1,5 @@
 var redisClient = require("redisclient"),
-         dealer = require("../lib/index"),
+         dealer = require("../lib"),
             sys = require('sys')
 
 conn = dealer.create()
