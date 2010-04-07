@@ -10,7 +10,7 @@ conn.server.listen(port)
 sys.puts("listening on " + port)
 
 conn.addListener('connect', function(client) {
-  sys.puts('connected to ' + client.channel + ': '+ client.id)
+  sys.puts('connected to ' + sys.inspect(client.channels) + ': '+ client.id)
 })
 
 conn.addListener('disconnect', function(client) {
@@ -18,7 +18,7 @@ conn.addListener('disconnect', function(client) {
 })
 
 conn.addListener('receive', function(client, data) {
-  sys.puts('from ' + client.id + '(' + client.channel + '): ' + data)
+  sys.puts('from ' + client.id + sys.inspect(client.channels) + ': ' + data)
   client.send("PONG! " + data)
 })
 
