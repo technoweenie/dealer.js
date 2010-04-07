@@ -8,8 +8,11 @@ assert.deepEqual({}, d.ids)
 assert.deepEqual({}, d.channels)
 
 // connect first client
+var expectedEvents   = 5
 var expectedClientId = 'abc'
 var clientAssertion = function(client) {
+  assert.ok(expectedEvents > 0)
+  expectedEvents = expectedEvents - 1
   assert.equal(expectedClientId, client.id)
 }
 
@@ -50,4 +53,5 @@ d.disconnect(client2)
 assert.equal(null, d.ids[client2.id])
 assert.deepEqual([], Object.keys(d.channels.foo.subscribers))
 
+assert.equal(0, expectedEvents)
 sys.puts('pass!')
