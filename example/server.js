@@ -1,8 +1,10 @@
 var redisClient = require("redisclient"),
          dealer = require("../lib"),
-            sys = require('sys')
+            sys = require('sys'),
+            url = require('url')
 
-var port = process.env['PORT'] || 3840
+var port      = process.env['PORT'] || 3840
+var redisConf = process.env['REDIS_URL'] || "redis://127.0.0.1:6379/0"
 
 conn = dealer.create()
 conn.server.listen(port)
@@ -22,11 +24,15 @@ conn.addListener('receive', function(client, data) {
   client.send("PONG! " + data)
 })
 
-var redis = redisClient.createClient();
-    
+redisConf   = url.parse(redisConf)
+var redisDb = redisConf.pathname.substr(1)
+var redis   = redisClient.createClient(redisConf.port, redisConf.hostname);
+
 redis.stream.addListener("connect", function () {
-  redis.subscribeTo("*", function (channel, message) {
-    sys.puts("to " + channel + ": " + message);
-    conn.sendToChannel(channel, message)
+  redis.select(redisDb, function(a) {
+    redis.subscribeTo("*", function (channel, message) {
+      sys.puts("to " + channel + ": " + message);
+      conn.sendToChannel(channel, message)
+    })
   })
 })
