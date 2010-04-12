@@ -16,9 +16,9 @@ function result(data) {
   $('#results').append('<li>' + data + '</li>')
 }
 
-function connect(port, channel) {
+function connect(host, channel) {
   var id = $.uuid(),
-     url = 'ws://localhost:' + port + '/' + channel + '?id=' + id;
+     url = 'ws://' + host + '/' + channel + '?id=' + id;
 
   socket = $.ws.conn({
     url : url,
@@ -37,10 +37,10 @@ function connect(port, channel) {
 $(document).ready(function() {
   // sets the channel and connects to the web socket server
   $('#channelButton').click(function() {
+    var host = $('#host').val();
     var name = $('#channel').val();
-    var port = $('#port').val()
     if(name.length == 0) return false;
-    connect(port, name)
+    connect(host, name)
     $('#channelParagraph input').attr('disabled', true)
     $('#sendParagraph').show()
     return false;
@@ -62,8 +62,8 @@ $(document).ready(function() {
 <body>
   <form action="#">
     <p id="channelParagraph">
+      <input type="text" id="host" value="localhost:3840" />
       <input type="text" id="channel" placeholder="Enter Channel" />
-      <input type="text" id="port" value="3840" />
       <button id="channelButton">Connect</button>
     </p>
     <p id="sendParagraph" style="display:none">
