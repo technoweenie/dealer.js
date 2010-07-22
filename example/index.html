@@ -19,7 +19,6 @@ function result(data) {
 function connect(host, channel) {
   var id = $.uuid(),
      url = 'ws://' + host + '/' + channel + '?id=' + id;
-
   socket = $.ws.conn({
     url : url,
     onmessage: function(data) {

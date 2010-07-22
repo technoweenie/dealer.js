@@ -1,4 +1,4 @@
-# dealer.js
+# Dealer.js
 
 Framework for setting up a cluster of web socket servers.  Each server runs one 
 Dealer instance, which tracks connected clients, and channel subscribers.
